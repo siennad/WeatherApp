@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Example from './components/Example';
+import SearchBar from './components/SearchBar';
 
 class App extends Component {
     render () {
         return (
             <div>
-                This is the root
-                <Example />
+                <h1> Weather Forecast</h1>
+                <SearchBar />
             </div>
         )
     }
