@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import SearchBar from './SearchBar';
+import { withRouter } from 'react-router-dom';
+import NavBar from './NavBar';
 
 class MainPage extends Component {
     render () {
         return (
             <div>
-                <h1> Weather Forecast</h1>
+                <NavBar />
                 <SearchBar />
             </div>
         )
     }
 }
 
-export default MainPage
+export default withRouter(MainPage)

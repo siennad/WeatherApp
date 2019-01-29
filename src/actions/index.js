@@ -6,6 +6,9 @@ export const REMOVE_LOCATION ='REMOVE_LOCATION';
 export const SELECT_LOCATION ='SELECT_LOCATION';
 export const VIEW_LOCATION ='VIEW_LOCATION';
 
+export const ADD_FAV = 'ADD_FAVOURITE';
+export const REMOVE_FAV = "REMOVE_FAVOURITE";
+
 export const REQUEST_WEATHER='REQUEST_WEATHER';
 export const RECEIVED_WEATHER='RECEIVED_WEATHER';
 
@@ -15,6 +18,16 @@ export const addLocation = (location) => ({
   type: ADD_LOCATION,
   name: location.name,
   id: generateId(),
+})
+
+export const addFav = (id) => ({
+  type: ADD_FAV,
+  id
+})
+
+export const removeFav = (id) => ({
+  type: REMOVE_FAV,
+  id
 })
 
 export const removeLocation = (id) => ({
@@ -76,5 +89,4 @@ export const selectLocation = (location) => {
   } else {
     dispatch(fetchWeatherInSavedLocation(location.id))
   }
-  
 }

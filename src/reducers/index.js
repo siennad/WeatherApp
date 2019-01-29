@@ -4,7 +4,9 @@ import {
   REQUEST_WEATHER,
   RECEIVED_WEATHER,
   SET_FETCH_ERROR,    
-  SELECT_LOCATION
+  SELECT_LOCATION,
+  ADD_FAV,
+  REMOVE_FAV
 } from '../actions';
 
 import {combineReducers} from 'redux';
@@ -23,7 +25,17 @@ const location = (state = initState, action) => {
       return {
         id: action.id,
         locationName: action.name,
+        originId: action.originId,
+        ...state
+      }
+    case ADD_FAV: 
+      return {
         isFavourite: true,
+        ...state
+      }
+    case REMOVE_FAV: 
+      return {
+        isFavourite: false,
         ...state
       }
     case REQUEST_WEATHER:
@@ -73,10 +85,10 @@ const locations = (state = {}, action) => {
   }
 }
 
-const selectedLocation = (state = null, action) => {
+const viewLocation = (state = null, action) => {
   return (action.type === VIEW_LOCATION) ? action.id : state
 }
 
-const reducers = combineReducers({locations, selectedLocation})
+const reducers = combineReducers({locations, viewLocation})
 
 export default reducers;
