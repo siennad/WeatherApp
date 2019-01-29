@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
@@ -144,8 +143,5 @@ SearchBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    fetchLocation: val => dispatch(fetchLocation(val))
-})
 
-export default withStyles(styles)(connect(null, mapDispatchToProps)(SearchBar));
+export default withStyles(styles)(SearchBar);

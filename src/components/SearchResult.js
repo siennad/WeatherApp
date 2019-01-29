@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
 import { 
   CircularProgress, 
@@ -7,10 +8,10 @@ import {
   Paper,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-
-import {Link} from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
+import { selectLocation } from '../actions';
 
 const styles = theme => ({
   container: {
@@ -33,7 +34,11 @@ class SearchResult extends Component {
     this.dispatchThenNavigate = this.dispatchThenNavigate.bind(this)
   }
 
-  dispatchThenNavigate() {}
+  dispatchThenNavigate(location) {
+    selectLocation(location)
+    this.props.history.replace(`/location/${location.originId}`)
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -44,7 +49,7 @@ class SearchResult extends Component {
       return (
       <div>
         <ListItem key={r.id} button>
-          <span onClick={this.dispatchThenNavigate} className={classes.anchorStyle}>{r.name}, {r.country}</span>
+          <span onClick={this.dispatchThenNavigate(r)} className={classes.anchorStyle}>{r.name}, {r.country}</span>
         </ListItem>
       </div>
       )   
@@ -80,4 +85,9 @@ SearchResult.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  selectLocation: val => dispatch(selectLocation(val))
+})
+
+SearchResult = connect(null, mapDispatchToProps, withRouter(SearchResult))
 export default withStyles(styles)(SearchResult)
