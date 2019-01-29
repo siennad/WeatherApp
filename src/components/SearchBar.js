@@ -8,8 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { fetchLocation } from './../actions/index';
+import SearchResult from './SearchResult';
 
+const CITY_URL = '../../www/dataList/cityList.json'
 
 const styles = theme => ({
     formWrap: {
@@ -34,64 +35,87 @@ const styles = theme => ({
 
   
 class SearchBar extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {}     
-
-        this.handleChangeSearchBox = this.handleChangeSearchBox.bind(this);   
-        this.searchBtnClicked = this.searchBtnClicked.bind(this);   
-        this.searchLocation = this.searchLocation.bind(this);
-    }   
-
-    handleChangeSearchBox(event) {
-        let val = event.target.value;
-        this.setState = {
-            input: val
-        }
-        this.searchLocation(val) ;
+  constructor(props) {
+    super(props);
+    this.state = {
+      val: '',
+      searchResult: [],
+      isFetching: false
     }
+    this.handleChangeSearchBox = this.handleChangeSearchBox.bind(this);   
+    this.searchBtnClicked = this.searchBtnClicked.bind(this);   
+    this.searchLocation = this.searchLocation.bind(this);
+  }   
 
-    searchBtnClicked() {
-        console.log('clicked');
-        
-        this.searchLocation(this.state.input);
+  async searchLocation(val) {
+    console.log(this.state)
+    await fetch(`${CITY_URL}`)
+        .then(res => res.json())
+        .then(respond => {
+            return respond.filter(res => res.name.toLowerCase().includes(val.toLowerCase()) || 
+              res.country.toLowerCase().includes(val.toLowerCase()))
+        })
+        .then(res => {
+          const data = res.map((d) => ({
+            name: d.name,
+            country: d.country,
+            id: d.id
+            })
+          )
+          this.setState =  {
+            searchResult: data,
+            isFetching: false
+          }
+          console.log(this.state)
+        })
+  }
+
+  handleChangeSearchBox(event) {
+    let val = event.target.value;
+    this.setState = {
+      input: val,
+      isFetching: true
     }
+    this.searchLocation(val) ;
+  }
 
-    searchLocation(val) {
-        this.props.fetchLocation(val);
-    }
+  searchBtnClicked() {     
+    this.setState = {
+      isFetching: true
+    } 
+    this.searchLocation(this.state.input);
+  }
 
-    render () {
-        const { classes } = this.props;
+  render () {
+    const { classes } = this.props;
 
-        return (
-            <div>
-                <form className={classes.container} noValidate autoComplete="off">
-                    <Paper className={classes.formWrap} elevation={1}>
-                        <TextField
-                            id="standard-with-placeholder"
-                            label="Search"
-                            placeholder='City, country...'
-                            fullWidth={true}
-                            className={classes.textField}
-                            margin="normal"
-                            variant="outlined"
-                            value={this.state.input} 
-                            onChange={this.handleChangeSearchBox.bind(this)}
-                        />
-                        <IconButton 
-                            className={classes.iconButton} 
-                            aria-label="Search"
-                            onClick={this.searchBtnClicked}>
-                            <SearchIcon />
-                        </IconButton>
-                    </Paper>
-                </form>
-            </div>            
-        )
-    }
+    return (
+      <div>
+        <form className={classes.container} noValidate autoComplete="off">
+          <Paper className={classes.formWrap} elevation={1}>
+            <TextField
+              id="standard-with-placeholder"
+              label="Search"
+              placeholder='City, country...'
+              fullWidth={true}
+              className={classes.textField}
+              margin="normal"
+              variant="outlined"
+              value={this.state.input} 
+              onChange={this.handleChangeSearchBox.bind(this)}
+            />
+            <IconButton 
+              className={classes.iconButton} 
+              aria-label="Search"
+              onClick={this.searchBtnClicked}>
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+        </form>
+        <SearchResult isFetching={this.state.isFetching||false} list={this.state.searchResult||[]} />
+      </div>            
+    )
+  }
 }
 
 

@@ -2,14 +2,12 @@ import fetch from 'isomorphic-fetch';
 import Promise from 'promise';
 
 const API_KEY = 'eedb2d2eed11268a3e405ede2dfc862d'
-const API_URL = 'https://api.openweathermap.org/data/2.5'
+const WEATHER_URL = 'https://api.openweathermap.org/data/2.5'
 
 const C_UNIT = 'Celsius'
 const F_UNIT = 'Fahrenheir'
 const K_UNIT = 'Kelvin'
 let  DEFAULT_UNIT = C_UNIT
-
-const CITY_URL = '../../www/dataList/cityList.json'
 
 // func to convert unit of temps
 const kelvinToCelsius = (kelvin) => kelvin - 273.15;
@@ -40,22 +38,33 @@ const apiCall = (url) => {
         })
 }
 
-export const queryLocation = (val) => {
-    let data;
+export const queryWeather = (city) => {
+  let data;
 
-    return apiCall(`${CITY_URL}`)
-        .then(respond => {
-            console.log(respond);
-            respond.filter(res => res.name.includes(val) || res.country.includes(val))
-        })
-        .then(res => {
-            console.log(res);
-            data = {
-                name: res.name,
-                country: res.country,
-                id: res.id
-            }
-            console.log(data)
-            return data
-        })
+  return apiCall(`${WEATHER_URL}/weather?q=${city.trim()}&appid=${API_KEY}`)
+      .then(respond => {
+          console.log(respond);
+          data = {
+            tempNow: round(converter(DEFAULT_UNIT, respond.main.temp), 0),
+            iconCodeNow: respond.weather[0].icon,
+            locationName: respond.name,
+            locationID: respond.id,
+            country: respond.sys.country,
+            windNow: respond.wind.speed
+          }
+
+          return apiCall(`${WEATHER_URL}/forecast?q=${city.trim()},${data.country.toLowerCase()}&appid=${API_KEY}`)
+      })
+      .then(respond => {
+        return {
+          ...data,
+          forecast: respond.list.slice(0, 8).map((d) => ({
+            day: (new Date(d.dt * 1000)).getDay(),
+            hour: (new Date(d.dt * 1000)).getHours(),
+            icon: d.weather[0].icon,
+            temp: round(converter(DEFAULT_UNIT,d.main.temp), 0),
+            wind: d.wind.speed
+          }))
+        }
+      });      
 }

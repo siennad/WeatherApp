@@ -1,41 +1,61 @@
 import {v4 as generateId} from 'node-uuid';
-import { queryLocation } from './../api/index';
+import { queryWeather } from './../api/index';
 
 export const ADD_LOCATION = 'ADD_LOCATION';
 export const REMOVE_LOCATION ='REMOVE_LOCATION';
 export const SELECT_LOCATION ='SELECT_LOCATION';
-
-export const SEARCH_LOCATION ='SEARCH_LOCATION';
-export const RECEIVED_LOCATION = 'RECEIVED_LOCATTION';
 
 export const REQUEST_WEATHER='REQUEST_WEATHER';
 export const RECEIVED_WEATHER='RECEIVED_WEATHER';
 
 export const SET_FETCH_ERROR='SET_FETCH_ERROR';
 
-export const searchLocation = (val) => ({
-    type: SEARCH_LOCATION,
-    val: val
+export const addLocation = (location) => ({
+  type: ADD_LOCATION,
+  name: location.name,
+  id: generateId()
 })
 
-export const receiveLocation = (data) => ({
-    type: RECEIVED_LOCATION,
-    ...data
+export const removeLocation = (id) => ({
+  type: REMOVE_LOCATION,
+  id
 })
 
-export const setFetchError = (id = null) => ({
-    type: SET_FETCH_ERROR
+export const selectLocation = (id) => ({
+  type: SELECT_LOCATION,
+  id
 })
-// func to fetch location from api
-export const fetchLocation = (val) => {
-    console.log('fetching locations...')
-    return (dispatch, getState) => {
-        dispatch(searchLocation(val));
-        queryLocation(val)
-            .catch(() => dispatch(setFetchError))
-            .then((data) => {
-                dispatch(receiveLocation(data))
-                console.log(data);                
-            })
-    }
+
+export const requestWeather = (id) => ({
+  type: REQUEST_WEATHER,
+  id
+})
+
+export const receiveWeather = (id, data) => ({
+  type: RECEIVED_WEATHER,
+  id,
+  ...data
+})
+
+export const setFetchError = (id) => ({
+  type: SET_FETCH_ERROR,
+  id
+})
+
+//func to fetch weather from api
+export const fetchWeatherInSavedLocation = (id) => {
+  return (dispatch, getState) => {
+    const location = getState().locations[id];
+
+    dispatch(fetchWeatherInNewLocation(location));
+  } 
+}
+
+export const fetchWeatherInNewLocation = (location) => {
+  return (dispatch) => {
+    dispatch(requestWeather(location.id));
+    queryWeather(location.name)
+      .catch(() => dispatch(setFetchError(location.id)))
+      .then((data) => dispatch(receiveWeather(location.id, data)))
+  }
 }
