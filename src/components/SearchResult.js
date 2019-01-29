@@ -29,20 +29,26 @@ const styles = theme => ({
 class SearchResult extends Component {
   constructor(props) {
     super(props)
+
+    this.dispatchThenNavigate = this.dispatchThenNavigate.bind(this)
   }
 
+  dispatchThenNavigate() {}
   render() {
     const { classes } = this.props;
 
     const res = this.props.list;
 
-    const items = res.map((r) => (
+    const items = res.map((r, key) => {
+      console.log(`${key} : ${r.name}`)
+      return (
       <div>
-        <ListItem button>
-          <Link to={`/location/${r.id}`} className={classes.anchorStyle}>{r.name}, {r.country}</Link>
+        <ListItem key={r.id} button>
+          <span onClick={this.dispatchThenNavigate} className={classes.anchorStyle}>{r.name}, {r.country}</span>
         </ListItem>
-      </div>      
-    ))
+      </div>
+      )   
+    })
   
     if (this.props.isFetching){
       return (
@@ -52,18 +58,20 @@ class SearchResult extends Component {
           </Paper>   
         </div>
       )   
-    } else if (this.props.list != []) {
+    } else if (this.props.list.length == 0) {
+      return (
+        <div></div>
+      )
+    } else {
       return (
         <div className={classes.container}>
-          <Paper style={{minHeight:"100px"}}>
+          <Paper>
             <List>
               {items}
             </List>
           </Paper>
         </div>
-      )
-    } else {
-      return <div></div>
+      ) 
     }
   }
 }

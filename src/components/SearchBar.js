@@ -48,27 +48,28 @@ class SearchBar extends Component {
   }   
 
   searchLocation(val) {
-    console.log(this.state)
     fetch(`${CITY_URL}`)
-        .then(res => res.json())
-        .then(respond => {
-            return respond.filter(res => res.name.toLowerCase().startsWith(val.toLowerCase()) || 
-              res.name.toLowerCase().includes(val.toLowerCase()) || 
-              res.country.toLowerCase().includes(val.toLowerCase())).slice(0,5)
-        })
-        .then((res) => {
-          const data = res.map((d) => ({
-            name: d.name,
-            country: d.country,
-            id: d.id
-            })
-          )
-          this.setState({
-            ...this.state,
-            searchResult: data,
-            isFetching: false
+      .then(res => res.json())
+      .then(respond => {
+        let dataToReturn;
+        dataToReturn = respond.filter(res => res.name.toLowerCase().startsWith(val.toLowerCase()))
+        dataToReturn = (dataToReturn.length >= 5) ? dataToReturn : [...dataToReturn, respond.filter(res => res.country.toLowerCase().include(val.toLowerCase()))]
+        return dataToReturn.slice(0,5)
+      })
+      .then((res) => {
+        const data = res.map((d) => ({
+          name: d.name,
+          country: d.country,
+          id: d.id
           })
+        )
+        this.setState({
+          ...this.state,
+          searchResult: data,
+          isFetching: false
         })
+      })
+    
   }
 
   handleChangeSearchBox(event) {
@@ -78,7 +79,15 @@ class SearchBar extends Component {
       val: val,
       isFetching: true
     })
-    this.searchLocation(val) ;
+    if (val && val.length > 0) {
+      this.searchLocation(val) ;
+    } else {
+      this.setState({
+        input: '',
+        searchResult: [],
+        isFetching: false
+      })
+    }
   }
 
   searchBtnClicked() {     
@@ -86,7 +95,16 @@ class SearchBar extends Component {
       ...this.state,
       isFetching: true,
     })
-    this.searchLocation(this.state.val);
+
+    if (val && val.length > 0) {
+      this.searchLocation(this.state.val);
+    } else {
+      this.setState({
+        input: '',
+        searchResult: [],
+        isFetching: false
+      })
+    }
   }
 
   render () {

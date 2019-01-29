@@ -5,7 +5,7 @@
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx webpack -d --config webpack.config.js",
+    "build": "eslint && cross-env NODE_ENV=production webpack -d --config webpack.config.js",
     "android-dev": "cordova run android",
     "browser-dev": "cordova run browser"
   },
@@ -35,7 +35,9 @@
     "@material-ui/icons": "^3.0.2",
     "babel-loader": "^8.0.5",
     "classnames": "^2.2.6",
+    "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
+    "eslint": "^5.12.1",
     "isomorphic-fetch": "^2.2.1",
     "onsenui": "^2.10.6",
     "promise": "^8.0.2",
@@ -43,12 +45,14 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-hot-loader": "^4.6.3",
+    "react-onsenui": "^1.11.2",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1"
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
   }
 }
