@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {HashRouter as Router, Route, Switch} from 'react-router-dom';
+
 import MainPage from './components/MainPage';
 import LocationPage from './components/LocationPage';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 class App extends Component {
-    render () {
-        return (
-          <Router>  
-            <Switch>
-              <Route exact path="/" component={MainPage} />
-              <Route path="/location/:id" component={LocationPage} />
-            </Switch>    
-          </Router>
-        )
-    }
+
+  constructor(props) {
+    super(props);
+  }
+
+
+  render () {
+    return (
+      <Router>  
+        <Switch>
+          <Route exact path="/" component={MainPage} />
+          <Route path="/location/:name" component={LocationPage} />
+        </Switch>    
+      </Router>
+    )
+  }
 }
 
-export default App
+
+export default connect(mapStateToProps)(App)

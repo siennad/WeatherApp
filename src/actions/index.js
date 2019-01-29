@@ -4,6 +4,7 @@ import { queryWeather } from './../api/index';
 export const ADD_LOCATION = 'ADD_LOCATION';
 export const REMOVE_LOCATION ='REMOVE_LOCATION';
 export const SELECT_LOCATION ='SELECT_LOCATION';
+export const VIEW_LOCATION ='VIEW_LOCATION';
 
 export const REQUEST_WEATHER='REQUEST_WEATHER';
 export const RECEIVED_WEATHER='RECEIVED_WEATHER';
@@ -13,7 +14,7 @@ export const SET_FETCH_ERROR='SET_FETCH_ERROR';
 export const addLocation = (location) => ({
   type: ADD_LOCATION,
   name: location.name,
-  id: generateId()
+  id: generateId(),
 })
 
 export const removeLocation = (id) => ({
@@ -21,8 +22,8 @@ export const removeLocation = (id) => ({
   id
 })
 
-export const selectLocation = (id) => ({
-  type: SELECT_LOCATION,
+export const viewLocation = (id) => ({
+  type: VIEW_LOCATION,
   id
 })
 
@@ -46,16 +47,34 @@ export const setFetchError = (id) => ({
 export const fetchWeatherInSavedLocation = (id) => {
   return (dispatch, getState) => {
     const location = getState().locations[id];
-
-    dispatch(fetchWeatherInNewLocation(location));
+    // TODO: check if updated time is Over 10 mins so update weather, if not, return ${location} 
+    dispatch(forceUpdateWeather(location));
   } 
 }
 
 export const fetchWeatherInNewLocation = (location) => {
   return (dispatch) => {
     dispatch(requestWeather(location.id));
-    queryWeather(location.name)
-      .catch(() => dispatch(setFetchError(location.id)))
-      .then((data) => dispatch(receiveWeather(location.id, data)))
+    forceUpdateWeather(location)
   }
+}
+
+export const forceUpdateWeather = (location) => {
+  return (dispatch) => {
+    queryWeather(location.name)
+    .catch(() => dispatch(setFetchError(location.id)))
+    .then((data) => dispatch(receiveWeather(location.id, data)))
+  }
+}
+
+export const selectLocation = (location) => {
+  let isLocationExist = (getState().locations[location.originId]) ? true : false;
+  
+  if (!isLocationExist) {
+    dispatch(addLocation(location));
+    dispatch(fetchWeatherInNewLocation(location))
+  } else {
+    dispatch(fetchWeatherInSavedLocation(location.id))
+  }
+  
 }

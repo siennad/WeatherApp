@@ -50,7 +50,8 @@ export const queryWeather = (city) => {
             locationName: respond.name,
             locationID: respond.id,
             country: respond.sys.country,
-            windNow: respond.wind.speed
+            windNow: respond.wind.speed,
+            updatedTime: new Date()
           }
 
           return apiCall(`${WEATHER_URL}/forecast?q=${city.trim()},${data.country.toLowerCase()}&appid=${API_KEY}`)

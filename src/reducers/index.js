@@ -12,8 +12,9 @@ import {combineReducers} from 'redux';
 const initState = {
   isFetching: false,
   isInvalid: true,
-  temp: 0,
-  icon: -1,
+  tempNow: 0,
+  iconCodeNow: -1,
+  isFavourite: false
 }
 
 const location = (state = initState, action) => {
@@ -22,6 +23,7 @@ const location = (state = initState, action) => {
       return {
         id: action.id,
         locationName: action.name,
+        isFavourite: true,
         ...state
       }
     case REQUEST_WEATHER:
@@ -72,7 +74,7 @@ const locations = (state = {}, action) => {
 }
 
 const selectedLocation = (state = null, action) => {
-  return (action.type === SELECT_LOCATION) ? action.id : state
+  return (action.type === VIEW_LOCATION) ? action.id : state
 }
 
 const reducers = combineReducers({locations, selectedLocation})

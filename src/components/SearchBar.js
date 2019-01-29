@@ -60,7 +60,7 @@ class SearchBar extends Component {
         const data = res.map((d) => ({
           name: d.name,
           country: d.country,
-          id: d.id
+          originId: d.id
           })
         )
         this.setState({
