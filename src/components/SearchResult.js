@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
+
 import { 
   CircularProgress, 
-  Link, 
   List, 
   ListItem,
   Paper,
-  Divider
 } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+
+import {Link} from 'react-router-dom'
+
+import PropTypes from 'prop-types';
+
+const styles = theme => ({
+  container: {
+    padding: '4px 4px',
+    display: 'block',
+    alignItems: 'center',
+    width: "80%",
+    margin: "auto"
+  },
+  anchorStyle: {
+    color: "black",
+    textDecoration: "none"
+  }
+});
 
 class SearchResult extends Component {
   constructor(props) {
@@ -18,30 +36,40 @@ class SearchResult extends Component {
 
     const res = this.props.list;
 
-    const items = res.map(r => (
+    const items = res.map((r) => (
       <div>
         <ListItem button>
-          <Link to={`/location/${r.id}`}>{r.name}</Link>
+          <Link to={`/location/${r.id}`} className={classes.anchorStyle}>{r.name}, {r.country}</Link>
         </ListItem>
-        <Divider />
       </div>      
     ))
   
     if (this.props.isFetching){
       return (
-        <Paper style={{textAlign: "center", alignItem: "center"}}>
-          <CircularProgress size={20} />
-        </Paper>   
+        <div className={classes.container}>
+          <Paper style={{textAlign: "center", alignItem: "center", height:"50px"}}>
+            <CircularProgress size={40} />
+          </Paper>   
+        </div>
       )   
-    } else {
+    } else if (this.props.list != []) {
       return (
-        <List>
-          {items}
-        </List>
+        <div className={classes.container}>
+          <Paper style={{minHeight:"100px"}}>
+            <List>
+              {items}
+            </List>
+          </Paper>
+        </div>
       )
+    } else {
+      return <div></div>
     }
   }
 }
 
+SearchResult.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-export default (SearchResult)
+export default withStyles(styles)(SearchResult)

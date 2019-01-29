@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import SearchBar from './components/SearchBar';
+import MainPage from './components/MainPage';
+import LocationPage from './components/LocationPage';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 class App extends Component {
     render () {
         return (
-            <div>
-                <h1> Weather Forecast</h1>
-                <SearchBar />
-            </div>
+          <Router>  
+            <Switch>
+              <Route exact path="/" component={MainPage} />
+              <Route path="/location/:id" component={LocationPage} />
+            </Switch>    
+          </Router>
         )
     }
 }

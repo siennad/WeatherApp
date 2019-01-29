@@ -47,43 +47,46 @@ class SearchBar extends Component {
     this.searchLocation = this.searchLocation.bind(this);
   }   
 
-  async searchLocation(val) {
+  searchLocation(val) {
     console.log(this.state)
-    await fetch(`${CITY_URL}`)
+    fetch(`${CITY_URL}`)
         .then(res => res.json())
         .then(respond => {
-            return respond.filter(res => res.name.toLowerCase().includes(val.toLowerCase()) || 
-              res.country.toLowerCase().includes(val.toLowerCase()))
+            return respond.filter(res => res.name.toLowerCase().startsWith(val.toLowerCase()) || 
+              res.name.toLowerCase().includes(val.toLowerCase()) || 
+              res.country.toLowerCase().includes(val.toLowerCase())).slice(0,5)
         })
-        .then(res => {
+        .then((res) => {
           const data = res.map((d) => ({
             name: d.name,
             country: d.country,
             id: d.id
             })
           )
-          this.setState =  {
+          this.setState({
+            ...this.state,
             searchResult: data,
             isFetching: false
-          }
-          console.log(this.state)
+          })
         })
   }
 
   handleChangeSearchBox(event) {
     let val = event.target.value;
-    this.setState = {
-      input: val,
+    this.setState({
+      ...this.state,
+      val: val,
       isFetching: true
-    }
+    })
     this.searchLocation(val) ;
   }
 
   searchBtnClicked() {     
-    this.setState = {
-      isFetching: true
-    } 
-    this.searchLocation(this.state.input);
+    this.setState({
+      ...this.state,
+      isFetching: true,
+    })
+    this.searchLocation(this.state.val);
   }
 
   render () {
@@ -101,8 +104,8 @@ class SearchBar extends Component {
               className={classes.textField}
               margin="normal"
               variant="outlined"
-              value={this.state.input} 
-              onChange={this.handleChangeSearchBox.bind(this)}
+              value={this.state.val} 
+              onChange={this.handleChangeSearchBox}
             />
             <IconButton 
               className={classes.iconButton} 
@@ -112,7 +115,7 @@ class SearchBar extends Component {
             </IconButton>
           </Paper>
         </form>
-        <SearchResult isFetching={this.state.isFetching||false} list={this.state.searchResult||[]} />
+        <SearchResult isFetching={this.state.isFetching} list={this.state.searchResult} />
       </div>            
     )
   }
