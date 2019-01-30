@@ -9,7 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import SearchResult from './SearchResult';
 
-const CITY_URL = '../../www/dataList/cityList.json'
+const CITY_URL = 'dataList/cityList.json'
 
 const styles = theme => ({
     formWrap: {
@@ -32,7 +32,6 @@ const styles = theme => ({
       },
 });
 
-  
 class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -138,10 +137,8 @@ class SearchBar extends Component {
   }
 }
 
-
 SearchBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
 
 export default withStyles(styles)(SearchBar);

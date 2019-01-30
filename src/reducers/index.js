@@ -86,7 +86,7 @@ const locations = (state = {}, action) => {
 }
 
 const viewLocation = (state = null, action) => {
-  return (action.type === VIEW_LOCATION) ? action.id : state
+  return (action.type === 'VIEW_LOCATION') ? action.id : state
 }
 
 const reducers = combineReducers({locations, viewLocation})

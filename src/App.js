@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import MainPage from './components/MainPage';
@@ -24,5 +23,4 @@ class App extends Component {
   }
 }
 
-
-export default connect(mapStateToProps)(App)
+export default (App)

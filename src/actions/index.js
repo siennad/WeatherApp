@@ -81,12 +81,14 @@ export const forceUpdateWeather = (location) => {
 }
 
 export const selectLocation = (location) => {
-  let isLocationExist = (getState().locations[location.originId]) ? true : false;
+  return (dispatch, getState) => {
+    let isLocationExist = (getState().locations[location.originId]) ? true : false;
   
-  if (!isLocationExist) {
-    dispatch(addLocation(location));
-    dispatch(fetchWeatherInNewLocation(location))
-  } else {
-    dispatch(fetchWeatherInSavedLocation(location.id))
-  }
+    if (!isLocationExist) {
+      dispatch(addLocation(location));
+      dispatch(fetchWeatherInNewLocation(location))
+    } else {
+      dispatch(fetchWeatherInSavedLocation(location.id))
+    }
+  }  
 }

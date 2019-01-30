@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import SearchBar from './SearchBar';
 import { withRouter } from 'react-router-dom';
+
+import SearchBar from './SearchBar';
 import NavBar from './NavBar';
 
 class MainPage extends Component {

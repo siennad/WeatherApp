@@ -89,5 +89,5 @@ const mapDispatchToProps = (dispatch) => ({
   selectLocation: val => dispatch(selectLocation(val))
 })
 
-SearchResult = connect(null, mapDispatchToProps, withRouter(SearchResult))
+SearchResult = connect(null, mapDispatchToProps)(withRouter(SearchResult))
 export default withStyles(styles)(SearchResult)

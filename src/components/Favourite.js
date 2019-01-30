@@ -1,21 +1,24 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+//import { withStyles } from '@material-ui/core/styles';
+//import PropTypes from 'prop-types';
 
 import { addFav, removeFav } from '../actions';
-import { IconButton } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 import { FavoriteBorder, Favorite } from  '@material-ui/icons';
 
-class Favourite extends Component {
 
-  state = {
-    isFavourite: props.isFavourite
-  }
+class Favourite extends Component {
 
   constructor(props) {
     super(props);
 
     this.addToFavourite = this.addToFavourite.bind(this);
     this.removeFromFavourite = this.removeFromFavourite.bind(this);
+
+    this.state = {
+      isFavourite: props.isFavourite
+    }
   }
 
   addToFavourite() {
@@ -35,6 +38,8 @@ class Favourite extends Component {
   }
 
   render() {
+
+    const { classes } = this.props;
 
     if (!this.state.isFavourite) {
       return (

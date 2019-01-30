@@ -1,17 +1,16 @@
 import React from 'react';
 
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Grid,
-  withStyles
-} from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
+
+import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
 import { KeyboardBackspace } from  '@material-ui/icons';
-import { Favourite } from './Favourite';
+import Favourite  from './Favourite';
 
 const NavBar = ({
   title = "Forecast Weather", 
@@ -22,8 +21,8 @@ const NavBar = ({
 }) => (
   <AppBar position="static">
     <Toolbar>
-      <Gird container direction="row" justify="space-around" alignItems="center" spacing={24}>
-        <Grid item xs>
+      <Grid container direction="row" justify="space-around" alignItems="center" spacing={24}>
+        <Grid item xs={3}>
         {
           (onLocationPage) ?
             <IconButton color="inherit" aria-label="Back" onClick={() => {history.replace("/")}}>
@@ -33,22 +32,22 @@ const NavBar = ({
         }
         </Grid>
 
-        <Grid item xs-6>
+        <Grid item xs={6}>
           <Typography variant="h6" color="inherit">
             {title}
           </Typography>
         </Grid>
         
-        <Grid item xs-6>
+        <Grid item xs={3}>
         {
           (onLocationPage) ?
             <Favourite isFavourite={isFavourite} id={locationId} />
             : null
         }
         </Grid>
-      </Gird>
+      </Grid>
     </Toolbar>
   </AppBar>
 )
 
-export default withStyles(styles)(NavBar)
+export default (NavBar)
