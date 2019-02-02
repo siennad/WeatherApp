@@ -18,7 +18,7 @@ const styles = theme => ({
     padding: '4px 4px',
     display: 'block',
     alignItems: 'center',
-    width: "80%",
+    width: "100%",
     margin: "auto"
   },
   anchorStyle: {
@@ -35,6 +35,7 @@ class SearchResult extends Component {
   }
 
   dispatchThenNavigate(location) {
+    console.log("click")
     selectLocation(location)
     this.props.history.replace(`/location/${location.originId}`)
   }
@@ -47,11 +48,9 @@ class SearchResult extends Component {
     const items = res.map((r, key) => {
       console.log(`${key} : ${r.name}`)
       return (
-      <div>
-        <ListItem key={r.id} button>
-          <span onClick={this.dispatchThenNavigate(r)} className={classes.anchorStyle}>{r.name}, {r.country}</span>
+        <ListItem key={r.id} button onClick={() => this.dispatchThenNavigate(r)}>
+          <span className={classes.anchorStyle} >{r.name}, {r.country}</span>
         </ListItem>
-      </div>
       )   
     })
   

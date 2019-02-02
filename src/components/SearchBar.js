@@ -16,7 +16,7 @@ const styles = theme => ({
         padding: '2px 4px',
         display: 'flex',
         alignItems: 'center',
-        width: "80%",
+        width: "100%",
         margin: "auto"
     },
     container: {
@@ -24,8 +24,7 @@ const styles = theme => ({
         flexWrap: 'wrap',
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        margin: theme.spacing.unit,
     },
     iconButton: {
         padding: 10,

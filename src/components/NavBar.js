@@ -19,10 +19,10 @@ const NavBar = ({
   isFavourite = false, 
   locationId = null
 }) => (
-  <AppBar position="static">
-    <Toolbar>
+  <AppBar position="static" >
+    <Toolbar style={{ paddingLeft: '0px'; paddingRight: '0px' }}>
       <Grid container direction="row" justify="space-around" alignItems="center" spacing={24}>
-        <Grid item xs={3}>
+        <Grid item xs={3} style={{textAlign:"left"}}>
         {
           (onLocationPage) ?
             <IconButton color="inherit" aria-label="Back" onClick={() => {history.replace("/")}}>
@@ -33,12 +33,12 @@ const NavBar = ({
         </Grid>
 
         <Grid item xs={6}>
-          <Typography variant="h6" color="inherit">
+          <Typography variant="title" color="inherit" align="center">
             {title}
           </Typography>
         </Grid>
         
-        <Grid item xs={3}>
+        <Grid item xs={3} style={{textAlign:"right"}} >
         {
           (onLocationPage) ?
             <Favourite isFavourite={isFavourite} id={locationId} />
