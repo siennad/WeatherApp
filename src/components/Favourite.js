@@ -29,7 +29,7 @@ class Favourite extends Component {
   
   removeFromFavourite() {
     this.setState({
-      isFavourite: true
+      isFavourite: false
     })
   }
 
@@ -43,13 +43,13 @@ class Favourite extends Component {
 
     if (!this.state.isFavourite) {
       return (
-        <IconButton color="inherit" aria-label="AddToFavourite" onClick={this.addToFavourite}>
+        <IconButton color="inherit" aria-label="AddToFavourite" onClick={() => this.addToFavourite()}>
           <FavoriteBorder />
         </IconButton> 
       );
     } else {
       return (
-        <IconButton color="inherit" aria-label="RemoveFromFavourite" onClick={this.removeFromFavourite}>
+        <IconButton color="inherit" aria-label="RemoveFromFavourite" onClick={() => this.removeFromFavourite()}>
           <Favorite />
         </IconButton> 
       )

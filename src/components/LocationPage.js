@@ -23,6 +23,7 @@ class LocationPage extends Component {
       isFavourite
     } = this.props;
 
+    console.log(this.props)
   }
 
   render() {
@@ -41,10 +42,15 @@ class LocationPage extends Component {
 
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, props) {
+  console.log(state);
+  console.log(props);
+ // console.log(this.props);
+ // console.log(props);
+ console.log(state.locations[props.match.params.originId])
   return {
-    ...state.locations[this.props.params.originId]
+    ...state.locations[state.viewLocation]
   }
 }
 
-export default withRouter(connect(mapStateToProps, undefined)(LocationPage))
+export default connect(mapStateToProps, undefined)(LocationPage)
