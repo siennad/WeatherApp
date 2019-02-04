@@ -28,8 +28,15 @@ const round = (value, decimals = 1) => {
     return Math.round(x * value) / x;
 }
 
-const apiCall = (url) => {
-    return fetch(url)
+const apiCall = async (url) => {
+  /* wrong code, need to rewrite
+  console.log(url)
+  const respond = fetch(url);
+  const r = new Promise.resolve(respond).then((res) => respond = res);
+  const res = (respond.status >= 400) ? Promise.reject('Invalid respond') : r.json();
+  const json = (parseInt(res.cod) !== 200) ? Promise.reject('Invalid respond') : res;
+  return json*/
+  return await fetch(url)
         .then(res => {
             return (res.status >= 400) ? Promise.reject('Invalid respond') : res.json()
         })
@@ -41,6 +48,8 @@ const apiCall = (url) => {
 export const queryWeather = (city) => {
   let data;
 
+  console.log('query weather');
+  
   return apiCall(`${WEATHER_URL}/weather?q=${city.trim()}&appid=${API_KEY}`)
       .then(respond => {
           console.log(respond);

@@ -25,7 +25,6 @@ const location = (state = initState, action) => {
       return {
         id: action.id,
         locationName: action.name,
-        originId: action.originId,
         ...state
       }
     case ADD_FAV: 
@@ -76,6 +75,8 @@ const locations = (state = {}, action) => {
     case SET_FETCH_ERROR:
     case REQUEST_WEATHER:
     case RECEIVED_WEATHER:
+    case ADD_FAV:
+    case REMOVE_FAV:
       return {
         ...state,
         [action.id]: location({...state[action.id]}, action)

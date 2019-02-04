@@ -6,30 +6,37 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 
-import { withStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
-
-import { KeyboardBackspace } from  '@material-ui/icons';
-import Favourite  from './Favourite';
+import { KeyboardBackspace } from '@material-ui/icons';
+import Favourite from './Favourite';
 
 const NavBar = ({
-  title = "Forecast Weather", 
-  history = null, 
-  onLocationPage = false, 
-  isFavourite = false, 
+  title = 'Forecast Weather',
+  history = null,
+  onLocationPage = false,
+  isFavourite = false,
   locationId = null
 }) => (
-  <AppBar position="static" >
-    <Toolbar style={{ paddingLeft: '0px'; paddingRight: '0px' }}>
-      <Grid container direction="row" justify="space-around" alignItems="center" spacing={24}>
-        <Grid item xs={3} style={{textAlign:"left"}}>
-        {
-          (onLocationPage) ?
-            <IconButton color="inherit" aria-label="Back" onClick={() => {history.replace("/")}}>
+  <AppBar position="static">
+    <Toolbar style={{ paddingLeft: '0px', paddingRight: '0px' }}>
+      <Grid
+        container
+        direction="row"
+        justify="space-around"
+        alignItems="center"
+        spacing={24}
+      >
+        <Grid item xs={3} style={{ textAlign: 'left' }}>
+          {onLocationPage ? (
+            <IconButton
+              color="inherit"
+              aria-label="Back"
+              onClick={() => {
+                history.goBack();
+              }}
+            >
               <KeyboardBackspace />
-            </IconButton>           
-            : null
-        }
+            </IconButton>
+          ) : null}
         </Grid>
 
         <Grid item xs={6}>
@@ -37,17 +44,15 @@ const NavBar = ({
             {title}
           </Typography>
         </Grid>
-        
-        <Grid item xs={3} style={{textAlign:"right"}} >
-        {
-          (onLocationPage) ?
+
+        <Grid item xs={3} style={{ textAlign: 'right' }}>
+          {onLocationPage ? (
             <Favourite isFavourite={isFavourite} id={locationId} />
-            : null
-        }
+          ) : null}
         </Grid>
       </Grid>
     </Toolbar>
   </AppBar>
-)
+);
 
-export default (NavBar)
+export default (NavBar);

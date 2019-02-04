@@ -10,13 +10,12 @@ class App extends Component {
     super(props);
   }
 
-
   render () {
     return (
       <Router>  
         <Switch>
           <Route exact path="/" component={MainPage} />
-          <Route path="/location/:originId" render = {props => <LocationPage {...props} /> }  />
+          <Route path="/location/:id" render = {props => <LocationPage {...props} /> }  />
         </Switch>    
       </Router>
     )

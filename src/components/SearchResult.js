@@ -1,43 +1,38 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import { 
-  CircularProgress, 
-  List, 
-  ListItem,
-  Paper,
-} from '@material-ui/core';
+import { CircularProgress, List, ListItem, Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
-import { selectLocation } from '../actions';
 
 const styles = theme => ({
   container: {
     padding: '4px 4px',
     display: 'block',
     alignItems: 'center',
-    width: "100%",
-    margin: "auto"
+    width: '100%',
+    margin: 'auto'
   },
   anchorStyle: {
-    color: "black",
-    textDecoration: "none"
+    color: 'black',
+    textDecoration: 'none'
   }
 });
 
 class SearchResult extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.dispatchThenNavigate = this.dispatchThenNavigate.bind(this)
+    this.navigateTo = this.navigateTo.bind(this);
   }
 
-  dispatchThenNavigate(location) {
-    console.log("click")
-    selectLocation(location)
-    this.props.history.replace(`/location/${location.originId}`)
+  navigateTo(location) {
+    this.props.history.push({
+      pathname: `/location/${location.id}`,
+      state: { location: location }
+    });
   }
 
   render() {
@@ -46,47 +41,44 @@ class SearchResult extends Component {
     const res = this.props.list;
 
     const items = res.map((r, key) => {
-      console.log(`${key} : ${r.name}`)
+      console.log(`${key} : ${r.name}`);
       return (
-        <ListItem key={r.id} button onClick={() => this.dispatchThenNavigate(r)}>
-          <span className={classes.anchorStyle} >{r.name}, {r.country}</span>
+        <ListItem key={r.id} button onClick={() => this.navigateTo(r)}>
+          <span className={classes.anchorStyle}>
+            {r.name}, {r.country}
+          </span>
         </ListItem>
-      )   
-    })
-  
-    if (this.props.isFetching){
+      );
+    });
+
+    if (this.props.isFetching) {
       return (
         <div className={classes.container}>
-          <Paper style={{textAlign: "center", alignItem: "center", height:"50px"}}>
-            <CircularProgress size={40} />
-          </Paper>   
+          <Paper
+            elevation={0}
+            square={true}
+            style={{ textAlign: 'center', alignItem: 'center', height: '50px' }}
+          >
+            <CircularProgress size={40} disableShrink />
+          </Paper>
         </div>
-      )   
+      );
     } else if (this.props.list.length == 0) {
-      return (
-        <div></div>
-      )
+      return <div />;
     } else {
       return (
         <div className={classes.container}>
           <Paper>
-            <List>
-              {items}
-            </List>
+            <List>{items}</List>
           </Paper>
         </div>
-      ) 
+      );
     }
   }
 }
 
 SearchResult.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  selectLocation: val => dispatch(selectLocation(val))
-})
-
-SearchResult = connect(null, mapDispatchToProps)(withRouter(SearchResult))
-export default withStyles(styles)(SearchResult)
+export default withStyles(styles)(withRouter(SearchResult));

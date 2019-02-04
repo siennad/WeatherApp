@@ -49,7 +49,7 @@ class SearchBar extends Component {
       .then(res => res.json())
       .then(respond => {
         let dataToReturn;
-        dataToReturn = respond.filter(res => res.name.toLowerCase().startsWith(val.toLowerCase()))
+        dataToReturn = respond.filter(res => res.name.toLowerCase().startsWith(val.toLowerCase().trim()))
         dataToReturn = (dataToReturn.length >= 5) ? dataToReturn : [...dataToReturn, respond.filter(res => res.country.toLowerCase().include(val.toLowerCase()))]
         return dataToReturn.slice(0,5)
       })
@@ -57,7 +57,7 @@ class SearchBar extends Component {
         const data = res.map((d) => ({
           name: d.name,
           country: d.country,
-          originId: d.id
+          id: d.id
           })
         )
         this.setState({
