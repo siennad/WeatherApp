@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import Redux, {createStore, applyMiddleware} from 'redux';
+import Redux, { createStore, applyMiddleware, compose } from 'redux';
 import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
 import {AppContainer} from 'react-hot-loader';
@@ -10,8 +10,9 @@ import {platform} from 'onsenui';
 import reducers from './reducers'
 import App from './App';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers, 
-    process.env.NODE_ENV === 'production' ? applyMiddleware(thunk) : applyMiddleware(thunk, createLogger()))
+    process.env.NODE_ENV === 'production' ? applyMiddleware(thunk) : composeEnhancers(applyMiddleware(thunk, createLogger())))
 const reactTarget = document.getElementById('react-target');
 
 const startApp = () => {
