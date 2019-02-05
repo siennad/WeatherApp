@@ -19,17 +19,26 @@ class LocationPage extends Component {
       isLoaded: false
     }
 
-    this.renderPage = this.renderPage.bind(this)
-
+    this.renderPage = this.renderPage.bind(this);
   }
 
   componentDidMount() {
     this.props.actions.selectLocation(this.props.location.state.location)
   }
 
-  componentWillReceiveProps(props) {
-    console.log(props)
-    console.log(this.props)
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextProps);
+    console.log(nextState);
+    if (!nextProps.isFetching && !nextProps.isInvalid) {
+      if (!this.state.isLoaded) {
+        this.setState({
+          isLoaded: true
+        })
+      }
+      return true
+    } else {
+      return false
+    }
   }
 
   renderPage() {
@@ -42,6 +51,8 @@ class LocationPage extends Component {
           history={this.props.history}
           isFavourite={this.props.isFavourite}
         />
+
+        
       </Paper>
     );
   }
@@ -58,18 +69,19 @@ class LocationPage extends Component {
       forecast,
       updatedTime, 
       id,
-      isFavourite
+      isFavourite,
     } = this.props;
 
-    const page = () => this.renderPage();
-    return this.state.isLoaded ? {page} : <LoadingPage />
+    const page = this.renderPage();
+    return (this.state.isLoaded) ? page : <LoadingPage />
   }
 }
 
 function mapStateToProps(state, props) {
+  console.log(state)
   console.log(props)
   return {
-    ...state.locations[props.match.params.id]
+    ...state.locations[props.match.params.id],
   }
 }
 

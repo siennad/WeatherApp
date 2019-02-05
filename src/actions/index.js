@@ -77,9 +77,10 @@ export const forceUpdateWeather = (location) => {
     console.log('force update')
     queryWeather(location.name)
       .catch(() => dispatch(setFetchError(location.id)))
-      .then((data) =>  {
+      .then( async (data) =>  {
         console.log(data);
-        dispatch(receiveWeather(location.id, data)) 
+        dispatch(receiveWeather(location.id, data))
+        dispatch(viewLocation(location.id))
       })
   }
 }
