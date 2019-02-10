@@ -7,9 +7,10 @@ import TableRow from '@material-ui/core/TableRow';
 
 import PropTypes from 'prop-types';
 
-import * as _ from 'lodash';
+import map from 'lodash/map';
+import groupBy from 'lodash/groupBy';
 
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
   tableRoot: {
@@ -43,10 +44,10 @@ class Forecast extends Component {
   render() {
     const { classes } = this.props;
     const listOfForecast = this.props.forecast;
-    const listWithKey = _.groupBy(listOfForecast, forecast => forecast.day);
+    const listWithKey = groupBy(listOfForecast, forecast => forecast.day);
     let render = [];
 
-    _.map(listWithKey, (val, key) => {
+    map(listWithKey, (val, key) => {
       render.push(
         <TableRow key={key}>
           <TableCell
@@ -60,7 +61,7 @@ class Forecast extends Component {
         </TableRow>
       );
 
-      val.map((row,key) => {
+      map(val, (row,key) => {
         render.push(
           <TableRow>
             <TableCell

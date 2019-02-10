@@ -4,9 +4,10 @@ import {connect} from 'react-redux';
 //import PropTypes from 'prop-types';
 
 import { addFav, removeFav } from '../actions';
-import { IconButton, Snackbar } from '@material-ui/core';
-import { FavoriteBorder, Favorite } from  '@material-ui/icons';
-
+import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
+import Favorite  from  '@material-ui/icons/Favorite';
+import FavoriteBorder from  '@material-ui/icons/FavoriteBorder';
 
 class Favourite extends Component {
 

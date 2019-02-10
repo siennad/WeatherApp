@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { CircularProgress, List, ListItem, Paper } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import  Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+
+import withStyles from '@material-ui/core/styles/withStyles';
 import { withRouter } from 'react-router-dom';
 
 import PropTypes from 'prop-types';

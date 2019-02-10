@@ -1,4 +1,3 @@
-import { v4 as generateId } from 'node-uuid';
 import { queryWeather } from './../api/index';
 
 export const ADD_LOCATION = 'ADD_LOCATION';
