@@ -5,3 +5,8 @@ h1 {
 body {
   margin: 0 !important;
 }
+
+html, body {
+  height: 100%;
+  width: 100%
+}

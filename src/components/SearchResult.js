@@ -9,11 +9,9 @@ import PropTypes from 'prop-types';
 
 const styles = theme => ({
   container: {
-    padding: '4px 4px',
     display: 'block',
     alignItems: 'center',
     width: '100%',
-    margin: 'auto'
   },
   anchorStyle: {
     color: 'black',
@@ -67,7 +65,7 @@ class SearchResult extends Component {
     } else {
       return (
         <div className={classes.container}>
-          <Paper>
+          <Paper elevation={0}>
             <List>{items}</List>
           </Paper>
         </div>

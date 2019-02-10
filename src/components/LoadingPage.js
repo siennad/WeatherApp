@@ -11,7 +11,9 @@ const styles = theme => ({
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
-    display: 'flex'
+    display: 'flex',
+    backgroundColor: '#fdf0f6',
+    flexDirection: 'column'
   }
 });
 

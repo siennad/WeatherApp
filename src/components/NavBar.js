@@ -17,8 +17,8 @@ const NavBar = ({
   locationId = null
 }) => (
   <AppBar
-    position="static"
-    style={{ backgroundColor: '#5c848e', color: '#1d2323' }}
+    position="sticky"
+    style={{ backgroundColor: '#ff9234', color: '#951555' }}
   >
     <Toolbar style={{ paddingLeft: '0px', paddingRight: '0px' }}>
       <Grid

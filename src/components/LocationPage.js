@@ -76,7 +76,7 @@ class LocationPage extends Component {
 
   renderPage() {
     return (
-      <Paper style={{backgroundColor: '#e0e0ec'}}>
+      <Paper style={{backgroundColor: '#fdf0f6', height: '100%'}}>
         <NavBar
           onLocationPage={true}
           title={`${this.props.locationName}, ${this.props.country}`}

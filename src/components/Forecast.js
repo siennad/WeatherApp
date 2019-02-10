@@ -62,7 +62,7 @@ class Forecast extends Component {
 
       val.map((row,key) => {
         render.push(
-          <TableRow key={key}>
+          <TableRow>
             <TableCell
               component="th"
               scope="row"
@@ -79,7 +79,7 @@ class Forecast extends Component {
             <TableCell align="center" className={classes.normalCell}>
               {row.temp} &#8451;
             </TableCell>
-            <TableCell align="center" className={classes.normalCell}>
+            <TableCell align="right" className={classes.normalCell}>
               {row.wind} m/s
             </TableCell>
           </TableRow>
@@ -100,7 +100,7 @@ class Forecast extends Component {
               >
                 Weather
               </TableCell>
-              <TableCell align="center" className={classes.headerCell}>
+              <TableCell align="right" className={classes.headerCell}>
                 Wind
               </TableCell>
             </TableRow>
