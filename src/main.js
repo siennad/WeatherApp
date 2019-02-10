@@ -16,7 +16,6 @@ const store = createStore(reducers,
 const reactTarget = document.getElementById('react-target');
 
 const startApp = () => {
-    console.log(window.cordova)
     ReactDom.render(
         <AppContainer>
             <Provider store={store}>
@@ -34,4 +33,3 @@ if(!window.cordova) {
  } else {
     document.addEventListener('deviceready', startApp, false)
 }
-console.log("webpack bundle works");

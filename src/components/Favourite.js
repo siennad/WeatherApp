@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 //import PropTypes from 'prop-types';
 
 import { addFav, removeFav } from '../actions';
-import IconButton from '@material-ui/core/IconButton';
+import { IconButton, Snackbar } from '@material-ui/core';
 import { FavoriteBorder, Favorite } from  '@material-ui/icons';
 
 
@@ -17,20 +17,31 @@ class Favourite extends Component {
     this.removeFromFavourite = this.removeFromFavourite.bind(this);
 
     this.state = {
-      isFavourite: props.isFavourite
+      isFavourite: props.isFavourite,
+      openSnackbar: false
     }
   }
 
   addToFavourite() {
     this.setState({
-      isFavourite: true
+      isFavourite: true,
+      openSnackbar: true,
+      msg: 'Added to Favourite'
     })
   }
   
   removeFromFavourite() {
     this.setState({
-      isFavourite: false
-    })
+      isFavourite: false,
+      openSnackbar: true,
+      msg: 'Removed from Favourite'
+    });
+  }
+
+  closeSnackbar() {
+    this.setState({
+      openSnackbar: false
+    });
   }
 
   componentWillUnmount() {
@@ -38,22 +49,33 @@ class Favourite extends Component {
   }
 
   render() {
-
     const { classes } = this.props;
+    let FavButton;
 
-    if (!this.state.isFavourite) {
-      return (
-        <IconButton color="inherit" aria-label="AddToFavourite" onClick={() => this.addToFavourite()}>
-          <FavoriteBorder />
-        </IconButton> 
-      );
+    if (!this.state.isFavourite) {        
+      FavButton = <IconButton color="inherit" aria-label="AddToFavourite" onClick={() => this.addToFavourite()}>
+        <FavoriteBorder />
+      </IconButton>        
     } else {
-      return (
-        <IconButton color="inherit" aria-label="RemoveFromFavourite" onClick={() => this.removeFromFavourite()}>
+      FavButton = <IconButton color="inherit" aria-label="RemoveFromFavourite" onClick={() => this.removeFromFavourite()}>
           <Favorite />
         </IconButton> 
-      )
     }
+
+    return (
+      <React.Fragment>  
+        {FavButton}    
+        <Snackbar
+              open={this.state.openSnackbar}
+              onClose={this.closeSnackbar.bind(this)}
+              ContentProps={{
+                'aria-describedby': 'noti-id',
+              }}
+              message={<span id="noti-id">{this.state.msg}</span>}
+              autoHideDuration={2000}
+        />
+      </React.Fragment>
+    )
   }
 }
 

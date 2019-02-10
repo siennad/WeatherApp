@@ -19,7 +19,7 @@ export const addLocation = (location) => ({
   name: location.name,
   id: location.id
 })
-
+//TODO add Fav andremove update to db
 export const addFav = (id) => ({
   type: ADD_FAV,
   id
@@ -74,11 +74,9 @@ export const fetchWeatherInNewLocation = (location) => {
 
 export const forceUpdateWeather = (location) => {
   return (dispatch) => {
-    console.log('force update')
     queryWeather(location.name)
       .catch(() => dispatch(setFetchError(location.id)))
       .then( async (data) =>  {
-        console.log(data);
         dispatch(receiveWeather(location.id, data))
         dispatch(viewLocation(location.id))
       })

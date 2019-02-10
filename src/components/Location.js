@@ -12,7 +12,9 @@ class Location extends Component {
     this.showWeather = this.showWeather.bind(this);
   }
 
-  showWeather(id) {}
+  showWeather(id) {
+    //TODO navigate and dispatch action (view and reload)
+  }
 
   render() {
     const locationName = this.props.locationName;

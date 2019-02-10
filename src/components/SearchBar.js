@@ -58,7 +58,7 @@ class SearchBar extends Component {
     dataToReturn = await cities.filter(res =>
       res.name.toLowerCase().startsWith(val.toLowerCase().trim())
     );
-    dataToReturn = (await (dataToReturn.length < 5 && val.length <= 2))
+    dataToReturn = (dataToReturn.length < 5 && val.length <= 2)
       ? [
           ...dataToReturn,
           cities.filter(res =>
@@ -71,7 +71,7 @@ class SearchBar extends Component {
       country: d.country,
       id: d.id
     }));
-    await this.setState({
+    this.setState({
       searchResult: data,
       isFetching: false
     });
@@ -86,9 +86,9 @@ class SearchBar extends Component {
     });
     await this.delay(0.5);
     if (val && val.length > 0) {
-      await this.searchLocation(val);
+      this.searchLocation(val);
     } else {
-      await this.setState({
+      this.setState({
         searchResult: [],
         isFetching: false
       });

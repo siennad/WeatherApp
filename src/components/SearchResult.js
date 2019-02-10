@@ -41,7 +41,6 @@ class SearchResult extends Component {
     const res = this.props.list;
 
     const items = res.map((r, key) => {
-      console.log(`${key} : ${r.name}`);
       return (
         <ListItem key={r.id} button onClick={() => this.navigateTo(r)}>
           <span className={classes.anchorStyle}>

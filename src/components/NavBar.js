@@ -16,7 +16,10 @@ const NavBar = ({
   isFavourite = false,
   locationId = null
 }) => (
-  <AppBar position="static">
+  <AppBar
+    position="static"
+    style={{ backgroundColor: '#5c848e', color: '#1d2323' }}
+  >
     <Toolbar style={{ paddingLeft: '0px', paddingRight: '0px' }}>
       <Grid
         container
@@ -40,7 +43,12 @@ const NavBar = ({
         </Grid>
 
         <Grid item xs={6}>
-          <Typography variant="title" color="inherit" align="center">
+          <Typography
+            variant="title"
+            color="inherit"
+            align="center"
+            style={{ wordWrap: 'noWrap', fontWeight: '600' }}
+          >
             {title}
           </Typography>
         </Grid>
@@ -55,4 +63,4 @@ const NavBar = ({
   </AppBar>
 );
 
-export default (NavBar);
+export default NavBar;

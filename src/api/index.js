@@ -23,9 +23,27 @@ const converter = (type, val) => {
             return val
     }
 }
+
 const round = (value, decimals = 1) => {
     const x = Math.pow(10, decimals);
     return Math.round(x * value) / x;
+}
+
+const getdate = (val) => {
+
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const dayInWeek = days[(new Date(val * 1000)).getDay()]
+
+  const dayInMonth = (new Date(day * 1000)).getDate(); 
+  const month = (new Date(day * 1000)).getMonth() + 1;
+  const year = (new Date(day * 1000)).getFullYear();
+
+  const date = `${dayInWeek}, ${dayInMonth}/${month}/${year}`;
+  return date;
+}
+
+const gethour = (hour) => {
+  return `${hour}:00`
 }
 
 const apiCall = async (url) => {
@@ -47,20 +65,18 @@ const apiCall = async (url) => {
 
 export const queryWeather = (city) => {
   let data;
-
-  console.log('query weather');
-  
+ 
   return apiCall(`${WEATHER_URL}/weather?q=${city.trim()}&appid=${API_KEY}`)
       .then(respond => {
-          console.log(respond);
           data = {
             tempNow: round(converter(DEFAULT_UNIT, respond.main.temp), 0),
             iconCodeNow: respond.weather[0].icon,
+            weatherNow: respond.weather[0].main,
             locationName: respond.name,
             locationID: respond.id,
             country: respond.sys.country,
-            windNow: respond.wind.speed,
-            updatedTime: new Date()
+            windNow: round(respond.wind.speed, 0),
+            updatedTime: `${(new Date()).getHours()}:${(new Date()).getMinutes()}`
           }
 
           return apiCall(`${WEATHER_URL}/forecast?q=${city.trim()},${data.country.toLowerCase()}&appid=${API_KEY}`)
@@ -68,12 +84,13 @@ export const queryWeather = (city) => {
       .then(respond => {
         return {
           ...data,
-          forecast: respond.list.slice(0, 8).map((d) => ({
-            day: (new Date(d.dt * 1000)).getDay(),
-            hour: (new Date(d.dt * 1000)).getHours(),
+          forecast: respond.list.slice(0, 10).map((d) => ({
+            day: (new Date(d.dt * 1000)).toDateString(), //getdate(d.dt),
+            hour: gethour((new Date(d.dt * 1000)).getHours()),
             icon: d.weather[0].icon,
+            weather: d.weather[0].main,
             temp: round(converter(DEFAULT_UNIT,d.main.temp), 0),
-            wind: d.wind.speed
+            wind: round(d.wind.speed,0)
           }))
         }
       });      
