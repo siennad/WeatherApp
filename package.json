@@ -8,15 +8,18 @@
     "build-prod": "eslint && cross-env NODE_ENV=production webpack -d --config webpack.config.js",
     "build": "eslint && npx webpack -d --config webpack.config.js",
     "android-dev": "cordova run android",
-    "browser-dev": "cordova run browser"
+    "browser-dev": "cordova run browser",
+    "debug": "npm run build --progress -colors -profile -display-modules -display-reasons -display-error-details"
   },
   "author": "Sienna",
   "license": "Apache-2.0",
   "dependencies": {
+    "compression-webpack-plugin": "^2.0.0",
     "cordova-android": "^7.1.4",
     "cordova-browser": "^5.0.4",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-whitelist": "^1.3.3",
+    "localforage": "^1.7.3",
     "lodash": "^4.17.11"
   },
   "cordova": {
@@ -42,6 +45,7 @@
     "css-loader": "^2.1.0",
     "eslint": "^5.12.1",
     "isomorphic-fetch": "^2.2.1",
+    "json-loader": "^0.5.7",
     "promise": "^8.0.2",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",

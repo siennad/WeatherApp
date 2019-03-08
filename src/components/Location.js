@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
 
 class Location extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class Location extends Component {
 
     return (
       <div className={classes.root}>
-        <Paper onClick={this.showWeather(locationID)}>
+        <Card onClick={this.showWeather(locationID)}>
           <Grid container spacing={12}>
             <Grid item xs={6}>
               {locationName}, {locationCountry}
@@ -36,7 +36,7 @@ class Location extends Component {
               {weatherTemp}
             </Grid>
           </Grid>
-        </Paper>
+        </Card>
       </div>
     );
   }

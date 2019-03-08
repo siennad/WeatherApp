@@ -6,91 +6,89 @@ export const SELECT_LOCATION = 'SELECT_LOCATION';
 export const VIEW_LOCATION = 'VIEW_LOCATION';
 
 export const ADD_FAV = 'ADD_FAVOURITE';
-export const REMOVE_FAV = "REMOVE_FAVOURITE";
+export const REMOVE_FAV = 'REMOVE_FAVOURITE';
 
 export const REQUEST_WEATHER = 'REQUEST_WEATHER';
 export const RECEIVED_WEATHER = 'RECEIVED_WEATHER';
 
 export const SET_FETCH_ERROR = 'SET_FETCH_ERROR';
 
-export const addLocation = (location) => ({
+export const addLocation = location => ({
   type: ADD_LOCATION,
   name: location.name,
   id: location.id
-})
+});
 //TODO add Fav andremove update to db
-export const addFav = (id) => ({
-  type: ADD_FAV,
-  id
-})
+export const addFav = id => dispatch => {
+  dispatch({ type: ADD_FAV, id });
+};
 
-export const removeFav = (id) => ({
+export const removeFav = id => ({
   type: REMOVE_FAV,
   id
-})
+});
 
-export const removeLocation = (id) => ({
+export const removeLocation = id => ({
   type: REMOVE_LOCATION,
   id
-})
+});
 
-export const viewLocation = (id) => ({
+export const viewLocation = id => ({
   type: VIEW_LOCATION,
   id
-})
+});
 
-export const requestWeather = (id) => ({
+export const requestWeather = id => ({
   type: REQUEST_WEATHER,
   id
-})
+});
 
 export const receiveWeather = (id, data) => ({
   type: RECEIVED_WEATHER,
   id,
   ...data
-})
+});
 
-export const setFetchError = (id) => ({
+export const setFetchError = id => ({
   type: SET_FETCH_ERROR,
   id
-})
+});
 
 //func to fetch weather from api
-export const fetchWeatherInSavedLocation = (id) => {
+export const fetchWeatherInSavedLocation = id => {
   return (dispatch, getState) => {
     const location = getState().locations[id];
-    // TODO: check if updated time is Over 10 mins so update weather, if not, return ${location} 
+    // TODO: check if updated time is Over 10 mins so update weather, if not, return ${location}
     dispatch(forceUpdateWeather(location));
-  }
-}
+  };
+};
 
-export const fetchWeatherInNewLocation = (location) => {
+export const fetchWeatherInNewLocation = location => {
   return (dispatch, getState) => {
-    dispatch(requestWeather(location.id))
-    dispatch(forceUpdateWeather(location))
-  }
-}
+    dispatch(requestWeather(location.id));
+    dispatch(forceUpdateWeather(location));
+  };
+};
 
-export const forceUpdateWeather = (location) => {
-  return (dispatch) => {
+export const forceUpdateWeather = location => {
+  return dispatch => {
     queryWeather(location.name)
       .catch(() => dispatch(setFetchError(location.id)))
-      .then( async (data) =>  {
-        dispatch(receiveWeather(location.id, data))
-        dispatch(viewLocation(location.id))
-      })
-  }
-}
+      .then(async data => {
+        dispatch(receiveWeather(location.id, data));
+        dispatch(viewLocation(location.id));
+      });
+  };
+};
 
-export const selectLocation = (location) => {
-
+export const selectLocation = location => {
   return (dispatch, getState) => {
-    let isLocationExist = (getState().locations[location.id]) ? true : false;
+    let isLocationExist = getState().locations[location.id] ? true : false;
     if (!isLocationExist) {
-      dispatch(addLocation(location))
-      dispatch(fetchWeatherInNewLocation(location))
+      dispatch(addLocation(location));
+      dispatch(fetchWeatherInNewLocation(location));
     } else {
-      dispatch( fetchWeatherInSavedLocation(location.id) )
+      dispatch(fetchWeatherInSavedLocation(location.id));
     }
-  }
-}
+  };
+};

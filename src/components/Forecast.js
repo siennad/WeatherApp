@@ -4,13 +4,12 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import PropTypes from 'prop-types';
 
 import map from 'lodash/map';
 import groupBy from 'lodash/groupBy';
-
-import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
   tableRoot: {
@@ -61,7 +60,7 @@ class Forecast extends Component {
         </TableRow>
       );
 
-      map(val, (row,key) => {
+      map(val, (row, key) => {
         render.push(
           <TableRow>
             <TableCell
