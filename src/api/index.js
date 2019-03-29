@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import Promise from 'promise';
+import uuid from 'uuid';
 
 const API_KEY = 'eedb2d2eed11268a3e405ede2dfc862d';
 const WEATHER_URL = 'https://api.openweathermap.org/data/2.5';
