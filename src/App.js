@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import ReduxThunk from 'redux-thunk';
+
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import localForage from 'localforage';
 import MainPage from './components/MainPage';
