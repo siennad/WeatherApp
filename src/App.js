@@ -6,6 +6,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import localForage from 'localforage';
 import MainPage from './components/MainPage';
 import LocationPage from './components/LocationPage';
+import Button from '@material-ui/core/Button';
 
 class App extends Component {
   constructor(props) {
@@ -22,8 +23,13 @@ class App extends Component {
     console.log('Database init complete');
   }
 
+  
   render() {
+    
+    const btn = <Button>sth here</Button>
     return (
+      <>
+      {true && btn}
       <Router>
         <Switch>
           <Route exact path="/" component={MainPage} />
@@ -33,6 +39,7 @@ class App extends Component {
           />
         </Switch>
       </Router>
+      </>
     );
   }
 }
