@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-//import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 //import PropTypes from 'prop-types';
 
 import { addFav, removeFav } from '../actions';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import Favorite  from  '@material-ui/icons/Favorite';
 import FavoriteBorder from  '@material-ui/icons/FavoriteBorder';
@@ -52,6 +53,7 @@ class Favourite extends Component {
   render() {
     const { classes } = this.props;
     let FavButton;
+    const extraBtn = <Button onClick={()=>{}}>extra</Button>
 
     if (!this.state.isFavourite) {        
       FavButton = <IconButton color="inherit" aria-label="AddToFavourite" onClick={() => this.addToFavourite()}>
