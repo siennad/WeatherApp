@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 import NavBar from './NavBar';
 import LoadingPage from './LoadingPage';
@@ -132,10 +133,16 @@ class LocationPage extends Component {
       updatedTime,
       id,
       isFavourite,
-      classes
+      classes,
+      match
     } = this.props;
-
+    const params = match.params;
     const page = this.renderPage();
+
+    const btn = () => (
+      <Button onClick={() => {}}>Click here</Button>
+    );
+
     return this.state.isLoaded ? page : <LoadingPage />;
   }
 }
