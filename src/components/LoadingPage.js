@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import  Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   page: {
@@ -27,6 +28,7 @@ class LoadingPage extends Component {
   render() {
     const { classes } = this.props;
 
+    const btn = <Button onClick={() => {}}>Hei</Button>
     return (
       <Paper className={classes.page}>
         <CircularProgress size={56} disableShrink />
